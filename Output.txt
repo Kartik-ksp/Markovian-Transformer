@@ -1,0 +1,332 @@
+Main Model Instance with Advanced Features Enabled (Refactored Hybrid) ---
+MarkovianTransformerConfig(vocab_size=100, num_output_classes=100, embed_size=64, num_layers=2, heads=4, max_order=2, layer_max_orders=[2, 2], head_specific_transitions=True, token_specific_order_gate=True, order_gate_variant='deep_mlp', use_bidirectional_markov=True, constrain_transitions=True, transition_softplus_arg_offset=0.001, ffn_hidden_dim_multiplier=4.0, dropout_rate=0.1, param_init_std=0.02, max_seq_len=32, use_absolute_pos_embeddings=True, max_rel_pos_bias_range=2, ffn_variant='swiglu', tie_output_to_embedding_weights=False, use_gru_layer=True, gru_hidden_size=64, use_activation_checkpointing=False, activation_checkpointing_reentrant=False, compile_model=False, torch_compile_mode='default', torch_compile_options={}, label_smoothing=0.0, learning_rate=0.0003, weight_decay=0.01, beta1=0.9, beta2=0.95, grad_clip=1.0, warmup_iters=2, lr_decay_iters=10, min_lr_ratio=0.1, attention_type_per_layer=['markovian', 'hybrid_split_heads'], default_attention_type='hybrid_split_heads', hybrid_attention_markov_head_ratio=0.5, qi_attention_rff_dim_ratio=0.5, qi_attention_redraw_rff_on_train=False, use_adapters=True, adapter_bottleneck_dim_ratio=0.25, is_multimodal=True, image_feature_dim=32, num_image_patches=8, num_cross_attention_layers=1, multimodal_fusion_type='interleaved_cross_attn', sparsity_regularization_coeff=1e-05, sparsity_target_modules=['Linear', 'Embedding'])
+INFO: LearnableMarkovianAttention initialized for 4 heads (parent_total_heads: 4, head_dim: 16). External QKV: False
+INFO: LearnableMarkovianAttention initialized for 2 heads (parent_total_heads: 4, head_dim: 16). External QKV: True
+INFO: QuantumInspiredAttentionRFF initialized for 2 heads (parent_total_heads: 4, head_dim: 16), 8 RFFs per head. Redraw: False. External QKV: True
+
+--- Param Stats: Initial Main Advanced Model (2L, Refactored Hybrid) ---
+  Param Name                                                              Status(Shape,Count)            | Value(min,max,mean,std,absmean,nan,inf)                 
+  ----------------------------------------------------------------------- ------------------------------ | ------------------------------------------------------- 
+  token_embeddings.weight                                                 TRAIN ([100, 64],6400)         | min=-6.6e-02,max=+7.3e-02,mu=+2.8e-04,sig=2.0e-02,amu=1.6e-02,nan=0,inf=0 
+  pos_embeddings.weight                                                   TRAIN ([32, 64],2048)          | min=-7.3e-02,max=+8.7e-02,mu=+4.7e-04,sig=2.0e-02,amu=1.6e-02,nan=0,inf=0 
+  image_embedder.feature_projection.weight                                TRAIN ([64, 32],2048)          | min=-6.7e-02,max=+5.7e-02,mu=+3.9e-04,sig=2.0e-02,amu=1.6e-02,nan=0,inf=0 
+  image_embedder.feature_projection.bias                                  TRAIN ([64],64)                | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  image_embedder.pos_embed.weight                                         TRAIN ([8, 64],512)            | min=-6.2e-02,max=+5.9e-02,mu=-9.0e-04,sig=2.0e-02,amu=1.6e-02,nan=0,inf=0 
+  image_embedder.layer_norm.weight                                        TRAIN ([64],64)                | min=+1.0e+00,max=+1.0e+00,mu=+1.0e+00,sig=0.0e+00,amu=1.0e+00,nan=0,inf=0 
+  image_embedder.layer_norm.bias                                          TRAIN ([64],64)                | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  interleaved_cross_attn_txt_img.0.in_proj_weight                         TRAIN ([192, 64],12288)        | min=-1.5e-01,max=+1.5e-01,mu=+8.6e-04,sig=8.8e-02,amu=7.7e-02,nan=0,inf=0 
+  interleaved_cross_attn_txt_img.0.in_proj_bias                           TRAIN ([192],192)              | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  interleaved_cross_attn_txt_img.0.out_proj.weight                        TRAIN ([64, 64],4096)          | min=-7.5e-02,max=+7.5e-02,mu=-3.0e-04,sig=1.9e-02,amu=1.5e-02,nan=0,inf=0 
+  interleaved_cross_attn_txt_img.0.out_proj.bias                          TRAIN ([64],64)                | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  interleaved_cross_attn_txt_img.1.in_proj_weight                         TRAIN ([192, 64],12288)        | min=-1.5e-01,max=+1.5e-01,mu=+4.8e-04,sig=8.9e-02,amu=7.7e-02,nan=0,inf=0 
+  interleaved_cross_attn_txt_img.1.in_proj_bias                           TRAIN ([192],192)              | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  interleaved_cross_attn_txt_img.1.out_proj.weight                        TRAIN ([64, 64],4096)          | min=-6.9e-02,max=+8.1e-02,mu=-4.7e-05,sig=2.0e-02,amu=1.6e-02,nan=0,inf=0 
+  interleaved_cross_attn_txt_img.1.out_proj.bias                          TRAIN ([64],64)                | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  interleaved_cross_attn_img_txt.0.in_proj_weight                         TRAIN ([192, 64],12288)        | min=-1.5e-01,max=+1.5e-01,mu=+9.5e-04,sig=8.8e-02,amu=7.6e-02,nan=0,inf=0 
+  interleaved_cross_attn_img_txt.0.in_proj_bias                           TRAIN ([192],192)              | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  interleaved_cross_attn_img_txt.0.out_proj.weight                        TRAIN ([64, 64],4096)          | min=-8.2e-02,max=+7.4e-02,mu=-2.6e-05,sig=2.0e-02,amu=1.6e-02,nan=0,inf=0 
+  interleaved_cross_attn_img_txt.0.out_proj.bias                          TRAIN ([64],64)                | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  interleaved_cross_attn_img_txt.1.in_proj_weight                         TRAIN ([192, 64],12288)        | min=-1.5e-01,max=+1.5e-01,mu=+5.2e-04,sig=8.8e-02,amu=7.7e-02,nan=0,inf=0 
+  interleaved_cross_attn_img_txt.1.in_proj_bias                           TRAIN ([192],192)              | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  interleaved_cross_attn_img_txt.1.out_proj.weight                        TRAIN ([64, 64],4096)          | min=-7.0e-02,max=+7.2e-02,mu=-2.0e-04,sig=2.0e-02,amu=1.6e-02,nan=0,inf=0 
+  interleaved_cross_attn_img_txt.1.out_proj.bias                          TRAIN ([64],64)                | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  layers.0.attn_markov.transition_forward                                 TRAIN ([4, 2],8)               | min=-3.0e-02,max=+2.4e-02,mu=-1.4e-03,sig=1.6e-02,amu=1.2e-02,nan=0,inf=0 
+  layers.0.attn_markov.transition_backward                                TRAIN ([4, 2],8)               | min=-2.6e-02,max=+5.8e-02,mu=+8.7e-03,sig=2.5e-02,amu=1.7e-02,nan=0,inf=0 
+  layers.0.attn_markov.order_gate.0.weight                                TRAIN ([32, 16],512)           | min=-6.0e-02,max=+5.4e-02,mu=-1.1e-03,sig=2.1e-02,amu=1.7e-02,nan=0,inf=0 
+  layers.0.attn_markov.order_gate.0.bias                                  TRAIN ([32],32)                | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  layers.0.attn_markov.order_gate.2.weight                                TRAIN ([16, 32],512)           | min=-5.1e-02,max=+7.1e-02,mu=+2.1e-04,sig=2.0e-02,amu=1.6e-02,nan=0,inf=0 
+  layers.0.attn_markov.order_gate.2.bias                                  TRAIN ([16],16)                | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  layers.0.attn_markov.order_gate.4.weight                                TRAIN ([4, 16],64)             | min=-5.3e-02,max=+5.1e-02,mu=+3.0e-03,sig=1.9e-02,amu=1.5e-02,nan=0,inf=0 
+  layers.0.attn_markov.order_gate.4.bias                                  TRAIN ([4],4)                  | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  layers.0.attn_markov.qkv.weight                                         TRAIN ([192, 64],12288)        | min=-8.1e-02,max=+7.9e-02,mu=-1.4e-04,sig=2.0e-02,amu=1.6e-02,nan=0,inf=0 
+  layers.0.attn_markov.qkv.bias                                           TRAIN ([192],192)              | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  layers.0.attn_markov.proj.weight                                        TRAIN ([64, 64],4096)          | min=-3.7e-02,max=+3.5e-02,mu=+5.0e-04,sig=1.0e-02,amu=8.1e-03,nan=0,inf=0 
+  layers.0.attn_markov.proj.bias                                          TRAIN ([64],64)                | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  layers.0.attn_markov.relative_bias_layer.relative_attention_bias.weight TRAIN ([5, 4],20)              | min=-4.3e-02,max=+4.4e-02,mu=-9.4e-04,sig=2.3e-02,amu=1.8e-02,nan=0,inf=0 
+  layers.0.ln_1.weight                                                    TRAIN ([64],64)                | min=+1.0e+00,max=+1.0e+00,mu=+1.0e+00,sig=0.0e+00,amu=1.0e+00,nan=0,inf=0 
+  layers.0.ln_1.bias                                                      TRAIN ([64],64)                | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  layers.0.ln_2.weight                                                    TRAIN ([64],64)                | min=+1.0e+00,max=+1.0e+00,mu=+1.0e+00,sig=0.0e+00,amu=1.0e+00,nan=0,inf=0 
+  layers.0.ln_2.bias                                                      TRAIN ([64],64)                | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  layers.0.ffn.w1.weight                                                  TRAIN ([176, 64],11264)        | min=-7.5e-02,max=+8.4e-02,mu=+3.7e-04,sig=2.0e-02,amu=1.6e-02,nan=0,inf=0 
+  layers.0.ffn.w3.weight                                                  TRAIN ([176, 64],11264)        | min=-8.4e-02,max=+7.3e-02,mu=-4.1e-04,sig=2.0e-02,amu=1.6e-02,nan=0,inf=0 
+  layers.0.ffn.w2.weight                                                  TRAIN ([64, 176],11264)        | min=-4.0e-02,max=+4.0e-02,mu=-1.1e-04,sig=1.0e-02,amu=7.9e-03,nan=0,inf=0 
+  layers.0.gru.weight_ih_l0                                               TRAIN ([192, 64],12288)        | min=-1.5e-01,max=+1.5e-01,mu=+1.0e-03,sig=8.8e-02,amu=7.7e-02,nan=0,inf=0 
+  layers.0.gru.weight_hh_l0                                               TRAIN ([192, 64],12288)        | min=-2.7e-01,max=+2.8e-01,mu=+6.7e-04,sig=7.2e-02,amu=5.8e-02,nan=0,inf=0 
+  layers.0.gru.bias_ih_l0                                                 TRAIN ([192],192)              | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  layers.0.gru.bias_hh_l0                                                 TRAIN ([192],192)              | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  layers.0.adapter_attn.down_proj.weight                                  TRAIN ([16, 64],1024)          | min=-7.7e-02,max=+6.6e-02,mu=-9.0e-05,sig=2.0e-02,amu=1.6e-02,nan=0,inf=0 
+  layers.0.adapter_attn.down_proj.bias                                    TRAIN ([16],16)                | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  layers.0.adapter_attn.up_proj.weight                                    TRAIN ([64, 16],1024)          | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  layers.0.adapter_attn.up_proj.bias                                      TRAIN ([64],64)                | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  layers.0.adapter_ffn.down_proj.weight                                   TRAIN ([16, 64],1024)          | min=-7.1e-02,max=+5.7e-02,mu=-1.9e-04,sig=2.0e-02,amu=1.6e-02,nan=0,inf=0 
+  layers.0.adapter_ffn.down_proj.bias                                     TRAIN ([16],16)                | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  layers.0.adapter_ffn.up_proj.weight                                     TRAIN ([64, 16],1024)          | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  layers.0.adapter_ffn.up_proj.bias                                       TRAIN ([64],64)                | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  layers.1.qkv_block_internal.weight                                      TRAIN ([192, 64],12288)        | min=-7.1e-02,max=+7.2e-02,mu=+2.2e-04,sig=2.0e-02,amu=1.6e-02,nan=0,inf=0 
+  layers.1.qkv_block_internal.bias                                        TRAIN ([192],192)              | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  layers.1.proj_block_internal.weight                                     TRAIN ([64, 64],4096)          | min=-3.3e-02,max=+3.5e-02,mu=-3.1e-05,sig=1.0e-02,amu=8.0e-03,nan=0,inf=0 
+  layers.1.proj_block_internal.bias                                       TRAIN ([64],64)                | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  layers.1.attn_markov.transition_forward                                 TRAIN ([2, 2],4)               | min=-1.3e-02,max=+3.2e-02,mu=+8.1e-03,sig=1.9e-02,amu=1.5e-02,nan=0,inf=0 
+  layers.1.attn_markov.transition_backward                                TRAIN ([2, 2],4)               | min=-3.6e-02,max=+3.9e-02,mu=+2.5e-03,sig=3.2e-02,amu=2.5e-02,nan=0,inf=0 
+  layers.1.attn_markov.order_gate.0.weight                                TRAIN ([32, 16],512)           | min=-6.2e-02,max=+6.6e-02,mu=+8.7e-04,sig=2.0e-02,amu=1.6e-02,nan=0,inf=0 
+  layers.1.attn_markov.order_gate.0.bias                                  TRAIN ([32],32)                | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  layers.1.attn_markov.order_gate.2.weight                                TRAIN ([16, 32],512)           | min=-5.7e-02,max=+6.2e-02,mu=+5.5e-04,sig=2.0e-02,amu=1.6e-02,nan=0,inf=0 
+  layers.1.attn_markov.order_gate.2.bias                                  TRAIN ([16],16)                | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  layers.1.attn_markov.order_gate.4.weight                                TRAIN ([4, 16],64)             | min=-4.8e-02,max=+4.0e-02,mu=+5.0e-04,sig=2.0e-02,amu=1.6e-02,nan=0,inf=0 
+  layers.1.attn_markov.order_gate.4.bias                                  TRAIN ([4],4)                  | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  layers.1.attn_markov.relative_bias_layer.relative_attention_bias.weight TRAIN ([5, 2],10)              | min=-3.0e-02,max=+1.5e-02,mu=-1.1e-02,sig=1.5e-02,amu=1.6e-02,nan=0,inf=0 
+  layers.1.ln_1.weight                                                    TRAIN ([64],64)                | min=+1.0e+00,max=+1.0e+00,mu=+1.0e+00,sig=0.0e+00,amu=1.0e+00,nan=0,inf=0 
+  layers.1.ln_1.bias                                                      TRAIN ([64],64)                | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  layers.1.ln_2.weight                                                    TRAIN ([64],64)                | min=+1.0e+00,max=+1.0e+00,mu=+1.0e+00,sig=0.0e+00,amu=1.0e+00,nan=0,inf=0 
+  layers.1.ln_2.bias                                                      TRAIN ([64],64)                | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  layers.1.ffn.w1.weight                                                  TRAIN ([176, 64],11264)        | min=-7.0e-02,max=+8.6e-02,mu=+4.4e-04,sig=2.0e-02,amu=1.6e-02,nan=0,inf=0 
+  layers.1.ffn.w3.weight                                                  TRAIN ([176, 64],11264)        | min=-8.0e-02,max=+7.1e-02,mu=-4.7e-04,sig=2.0e-02,amu=1.6e-02,nan=0,inf=0 
+  layers.1.ffn.w2.weight                                                  TRAIN ([64, 176],11264)        | min=-3.7e-02,max=+3.3e-02,mu=+2.0e-04,sig=9.9e-03,amu=7.9e-03,nan=0,inf=0 
+  layers.1.gru.weight_ih_l0                                               TRAIN ([192, 64],12288)        | min=-1.5e-01,max=+1.5e-01,mu=-1.6e-03,sig=8.9e-02,amu=7.7e-02,nan=0,inf=0 
+  layers.1.gru.weight_hh_l0                                               TRAIN ([192, 64],12288)        | min=-2.6e-01,max=+2.7e-01,mu=-3.6e-05,sig=7.2e-02,amu=5.7e-02,nan=0,inf=0 
+  layers.1.gru.bias_ih_l0                                                 TRAIN ([192],192)              | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  layers.1.gru.bias_hh_l0                                                 TRAIN ([192],192)              | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  layers.1.adapter_attn.down_proj.weight                                  TRAIN ([16, 64],1024)          | min=-5.7e-02,max=+6.8e-02,mu=+1.4e-04,sig=2.0e-02,amu=1.6e-02,nan=0,inf=0 
+  layers.1.adapter_attn.down_proj.bias                                    TRAIN ([16],16)                | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  layers.1.adapter_attn.up_proj.weight                                    TRAIN ([64, 16],1024)          | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  layers.1.adapter_attn.up_proj.bias                                      TRAIN ([64],64)                | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  layers.1.adapter_ffn.down_proj.weight                                   TRAIN ([16, 64],1024)          | min=-6.8e-02,max=+7.0e-02,mu=-3.1e-04,sig=2.0e-02,amu=1.6e-02,nan=0,inf=0 
+  layers.1.adapter_ffn.down_proj.bias                                     TRAIN ([16],16)                | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  layers.1.adapter_ffn.up_proj.weight                                     TRAIN ([64, 16],1024)          | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  layers.1.adapter_ffn.up_proj.bias                                       TRAIN ([64],64)                | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  final_norm.weight                                                       TRAIN ([64],64)                | min=+1.0e+00,max=+1.0e+00,mu=+1.0e+00,sig=0.0e+00,amu=1.0e+00,nan=0,inf=0 
+  final_norm.bias                                                         TRAIN ([64],64)                | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 
+  head.weight                                                             TRAIN ([100, 64],6400)         | min=-7.7e-02,max=+6.9e-02,mu=-2.4e-04,sig=2.0e-02,amu=1.6e-02,nan=0,inf=0 
+
+  Total params: 0.246M, Trainable: 0.246M
+  Device: cuda:0
+--- End Stats ---
+
+--- Main Advanced Model Test (Forward Pass, Refactored Hybrid) ---
+Logits (advanced config, refactored) shape: torch.Size([2, 16, 100])
+Main Advanced Model Test (Refactored Hybrid): PASSED
+
+--- Example Training Iterations (Main Advanced Model, Refactored Hybrid) ---
+Starting training for 3 iterations...
+Iter 0: LR=1.5e-04, Loss=4.663 (Main: 4.643, Sparsity: 1.989e-02)
+Iter 1: LR=3.0e-04, Loss=4.593 (Main: 4.573, Sparsity: 1.986e-02)
+Iter 2: LR=3.0e-04, Loss=4.481 (Main: 4.461, Sparsity: 1.981e-02)
+
+--- Param Stats: Main Advanced Model After Training (Refactored Hybrid) ---
+  Param Name                                                              Status(Shape,Count)            | Value(min,max,mean,std,absmean,nan,inf)                 | Grad(min,max,mean,std,absmean,nan,inf)
+  ----------------------------------------------------------------------- ------------------------------ | ------------------------------------------------------- | -------------------------------------------------------
+  token_embeddings.weight                                                 TRAIN ([100, 64],6400)         | min=-6.6e-02,max=+7.4e-02,mu=+2.6e-04,sig=1.9e-02,amu=1.5e-02,nan=0,inf=0 | min=-2.2e-02,max=+2.2e-02,mu=+1.9e-05,sig=2.3e-03,amu=7.7e-04,nan=0,inf=0
+  pos_embeddings.weight                                                   TRAIN ([32, 64],2048)          | min=-7.2e-02,max=+8.7e-02,mu=+4.5e-04,sig=2.0e-02,amu=1.6e-02,nan=0,inf=0 | min=-1.7e-02,max=+1.8e-02,mu=+5.8e-05,sig=3.6e-03,amu=2.0e-03,nan=0,inf=0
+  image_embedder.feature_projection.weight                                TRAIN ([64, 32],2048)          | min=-6.6e-02,max=+5.8e-02,mu=+3.8e-04,sig=2.0e-02,amu=1.6e-02,nan=0,inf=0 | min=-4.0e-02,max=+4.0e-02,mu=+3.3e-08,sig=1.0e-02,amu=7.8e-03,nan=0,inf=0
+  image_embedder.feature_projection.bias                                  TRAIN ([64],64)                | min=-7.5e-04,max=+7.5e-04,mu=-4.2e-06,sig=6.5e-04,amu=6.2e-04,nan=0,inf=0 | min=-3.0e-02,max=+2.9e-02,mu=-1.0e-10,sig=1.5e-02,amu=1.3e-02,nan=0,inf=0
+  image_embedder.pos_embed.weight                                         TRAIN ([8, 64],512)            | min=-6.2e-02,max=+5.9e-02,mu=-8.9e-04,sig=2.0e-02,amu=1.6e-02,nan=0,inf=0 | min=-1.4e-02,max=+1.5e-02,mu=-3.6e-08,sig=3.6e-03,amu=2.0e-03,nan=0,inf=0
+  image_embedder.layer_norm.weight                                        TRAIN ([64],64)                | min=+1.0e+00,max=+1.0e+00,mu=+1.0e+00,sig=5.9e-04,amu=1.0e+00,nan=0,inf=0 | min=-2.0e-03,max=+3.1e-03,mu=+6.4e-05,sig=1.1e-03,amu=8.7e-04,nan=0,inf=0
+  image_embedder.layer_norm.bias                                          TRAIN ([64],64)                | min=-7.5e-04,max=+7.5e-04,mu=-1.3e-05,sig=6.6e-04,amu=6.4e-04,nan=0,inf=0 | min=-3.2e-03,max=+3.1e-03,mu=-6.5e-05,sig=1.7e-03,amu=1.4e-03,nan=0,inf=0
+  interleaved_cross_attn_txt_img.0.in_proj_weight                         TRAIN ([192, 64],12288)        | min=-1.5e-01,max=+1.5e-01,mu=+8.7e-04,sig=8.8e-02,amu=7.7e-02,nan=0,inf=0 | min=-6.1e-03,max=+5.9e-03,mu=-4.9e-07,sig=8.8e-04,amu=6.1e-04,nan=0,inf=0
+  interleaved_cross_attn_txt_img.0.in_proj_bias                           TRAIN ([192],192)              | min=-7.5e-04,max=+7.5e-04,mu=-1.0e-05,sig=5.3e-04,amu=4.1e-04,nan=0,inf=0 | min=-4.5e-03,max=+4.3e-03,mu=+1.9e-05,sig=1.4e-03,amu=8.0e-04,nan=0,inf=0
+  interleaved_cross_attn_txt_img.0.out_proj.weight                        TRAIN ([64, 64],4096)          | min=-7.5e-02,max=+7.6e-02,mu=-2.9e-04,sig=1.9e-02,amu=1.5e-02,nan=0,inf=0 | min=-2.8e-02,max=+2.4e-02,mu=-6.0e-05,sig=5.9e-03,amu=4.5e-03,nan=0,inf=0
+  interleaved_cross_attn_txt_img.0.out_proj.bias                          TRAIN ([64],64)                | min=-7.5e-04,max=+7.5e-04,mu=-1.7e-05,sig=6.7e-04,amu=6.3e-04,nan=0,inf=0 | min=-3.2e-02,max=+3.4e-02,mu=+6.4e-04,sig=1.5e-02,amu=1.2e-02,nan=0,inf=0
+  interleaved_cross_attn_txt_img.1.in_proj_weight                         TRAIN ([192, 64],12288)        | min=-1.5e-01,max=+1.5e-01,mu=+4.8e-04,sig=8.9e-02,amu=7.7e-02,nan=0,inf=0 | min=-5.9e-03,max=+6.2e-03,mu=-1.0e-06,sig=7.3e-04,amu=4.9e-04,nan=0,inf=0
+  interleaved_cross_attn_txt_img.1.in_proj_bias                           TRAIN ([192],192)              | min=-7.5e-04,max=+7.5e-04,mu=-9.5e-06,sig=5.1e-04,amu=3.9e-04,nan=0,inf=0 | min=-4.1e-03,max=+5.0e-03,mu=+4.1e-05,sig=1.1e-03,amu=5.7e-04,nan=0,inf=0
+  interleaved_cross_attn_txt_img.1.out_proj.weight                        TRAIN ([64, 64],4096)          | min=-6.9e-02,max=+8.1e-02,mu=-4.8e-05,sig=2.0e-02,amu=1.6e-02,nan=0,inf=0 | min=-2.6e-02,max=+3.2e-02,mu=+1.5e-06,sig=4.6e-03,amu=3.3e-03,nan=0,inf=0
+  interleaved_cross_attn_txt_img.1.out_proj.bias                          TRAIN ([64],64)                | min=-7.5e-04,max=+7.5e-04,mu=+2.7e-05,sig=6.8e-04,amu=6.5e-04,nan=0,inf=0 | min=-3.0e-02,max=+2.3e-02,mu=+2.6e-04,sig=1.2e-02,amu=9.2e-03,nan=0,inf=0
+  interleaved_cross_attn_img_txt.0.in_proj_weight                         TRAIN ([192, 64],12288)        | min=-1.5e-01,max=+1.5e-01,mu=+9.5e-04,sig=8.8e-02,amu=7.6e-02,nan=0,inf=0 | min=-1.2e-03,max=+1.1e-03,mu=-1.4e-08,sig=1.1e-04,amu=4.8e-05,nan=0,inf=0
+  interleaved_cross_attn_img_txt.0.in_proj_bias                           TRAIN ([192],192)              | min=-7.5e-04,max=+7.5e-04,mu=-2.1e-05,sig=4.8e-04,amu=3.6e-04,nan=0,inf=0 | min=-4.3e-04,max=+4.6e-04,mu=+5.5e-06,sig=1.2e-04,amu=5.8e-05,nan=0,inf=0
+  interleaved_cross_attn_img_txt.0.out_proj.weight                        TRAIN ([64, 64],4096)          | min=-8.1e-02,max=+7.5e-02,mu=-2.3e-05,sig=2.0e-02,amu=1.6e-02,nan=0,inf=0 | min=-4.0e-03,max=+4.7e-03,mu=-9.0e-06,sig=8.0e-04,amu=5.7e-04,nan=0,inf=0
+  interleaved_cross_attn_img_txt.0.out_proj.bias                          TRAIN ([64],64)                | min=-7.5e-04,max=+7.5e-04,mu=+1.3e-04,sig=6.5e-04,amu=6.3e-04,nan=0,inf=0 | min=-3.3e-03,max=+2.4e-03,mu=-2.0e-04,sig=1.1e-03,amu=8.7e-04,nan=0,inf=0
+  interleaved_cross_attn_img_txt.1.in_proj_weight                         TRAIN ([192, 64],12288)        | min=-1.5e-01,max=+1.5e-01,mu=+5.2e-04,sig=8.8e-02,amu=7.7e-02,nan=0,inf=0 | N/A (No Grad/Not Required)
+  interleaved_cross_attn_img_txt.1.in_proj_bias                           TRAIN ([192],192)              | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 | N/A (No Grad/Not Required)
+  interleaved_cross_attn_img_txt.1.out_proj.weight                        TRAIN ([64, 64],4096)          | min=-6.9e-02,max=+7.1e-02,mu=-2.0e-04,sig=2.0e-02,amu=1.5e-02,nan=0,inf=0 | min=-3.1e-06,max=+3.1e-06,mu=+1.5e-08,sig=3.1e-06,amu=3.1e-06,nan=0,inf=0
+  interleaved_cross_attn_img_txt.1.out_proj.bias                          TRAIN ([64],64)                | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0 | N/A (No Grad/Not Required)
+  layers.0.attn_markov.transition_forward                                 TRAIN ([4, 2],8)               | min=-3.0e-02,max=+2.4e-02,mu=-1.4e-03,sig=1.6e-02,amu=1.2e-02,nan=0,inf=0 | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0
+  layers.0.attn_markov.transition_backward                                TRAIN ([4, 2],8)               | min=-2.6e-02,max=+5.7e-02,mu=+8.7e-03,sig=2.5e-02,amu=1.8e-02,nan=0,inf=0 | min=-5.0e-05,max=+7.1e-05,mu=+2.9e-06,sig=4.7e-05,amu=4.0e-05,nan=0,inf=0
+  layers.0.attn_markov.order_gate.0.weight                                TRAIN ([32, 16],512)           | min=-5.9e-02,max=+5.3e-02,mu=-1.1e-03,sig=2.0e-02,amu=1.6e-02,nan=0,inf=0 | min=-3.1e-06,max=+3.1e-06,mu=-2.4e-07,sig=3.1e-06,amu=3.1e-06,nan=0,inf=0
+  layers.0.attn_markov.order_gate.0.bias                                  TRAIN ([32],32)                | min=-5.1e-04,max=+5.2e-04,mu=+1.2e-04,sig=3.7e-04,amu=3.6e-04,nan=0,inf=0 | min=-2.2e-08,max=+1.9e-08,mu=-3.5e-09,sig=1.1e-08,amu=9.4e-09,nan=0,inf=0
+  layers.0.attn_markov.order_gate.2.weight                                TRAIN ([16, 32],512)           | min=-5.0e-02,max=+7.0e-02,mu=+2.3e-04,sig=2.0e-02,amu=1.5e-02,nan=0,inf=0 | min=-3.2e-06,max=+3.1e-06,mu=-7.3e-08,sig=3.1e-06,amu=3.1e-06,nan=0,inf=0
+  layers.0.attn_markov.order_gate.2.bias                                  TRAIN ([16],16)                | min=-6.3e-04,max=+6.5e-04,mu=+2.2e-04,sig=5.9e-04,amu=6.0e-04,nan=0,inf=0 | min=-6.8e-07,max=+2.1e-07,mu=-1.5e-07,sig=2.7e-07,amu=2.3e-07,nan=0,inf=0
+  layers.0.attn_markov.order_gate.4.weight                                TRAIN ([4, 16],64)             | min=-5.2e-02,max=+5.0e-02,mu=+2.9e-03,sig=1.9e-02,amu=1.4e-02,nan=0,inf=0 | min=-3.2e-06,max=+3.2e-06,mu=+2.9e-07,sig=3.1e-06,amu=3.1e-06,nan=0,inf=0
+  layers.0.attn_markov.order_gate.4.bias                                  TRAIN ([4],4)                  | min=-6.5e-04,max=+6.5e-04,mu=-1.5e-11,sig=5.3e-04,amu=3.3e-04,nan=0,inf=0 | min=-2.6e-05,max=+2.6e-05,mu=+4.5e-12,sig=2.1e-05,amu=1.3e-05,nan=0,inf=0
+  layers.0.attn_markov.qkv.weight                                         TRAIN ([192, 64],12288)        | min=-8.2e-02,max=+7.9e-02,mu=-1.4e-04,sig=2.0e-02,amu=1.6e-02,nan=0,inf=0 | min=-4.8e-03,max=+5.6e-03,mu=-1.0e-08,sig=5.9e-04,amu=2.6e-04,nan=0,inf=0
+  layers.0.attn_markov.qkv.bias                                           TRAIN ([192],192)              | min=-7.5e-04,max=+7.5e-04,mu=+2.7e-05,sig=4.8e-04,amu=3.6e-04,nan=0,inf=0 | min=-4.8e-03,max=+4.7e-03,mu=-9.3e-05,sig=1.2e-03,amu=5.5e-04,nan=0,inf=0
+  layers.0.attn_markov.proj.weight                                        TRAIN ([64, 64],4096)          | min=-3.7e-02,max=+3.6e-02,mu=+5.0e-04,sig=1.0e-02,amu=8.1e-03,nan=0,inf=0 | min=-1.3e-02,max=+1.3e-02,mu=-7.7e-06,sig=2.1e-03,amu=1.6e-03,nan=0,inf=0
+  layers.0.attn_markov.proj.bias                                          TRAIN ([64],64)                | min=-7.5e-04,max=+7.5e-04,mu=+1.7e-05,sig=5.8e-04,amu=5.3e-04,nan=0,inf=0 | min=-4.3e-02,max=+7.1e-02,mu=+1.9e-03,sig=2.2e-02,amu=1.8e-02,nan=0,inf=0
+  layers.0.attn_markov.relative_bias_layer.relative_attention_bias.weight TRAIN ([5, 4],20)              | min=-4.4e-02,max=+4.4e-02,mu=-9.9e-04,sig=2.2e-02,amu=1.7e-02,nan=0,inf=0 | min=-2.0e-04,max=+2.8e-04,mu=-3.1e-07,sig=1.3e-04,amu=9.3e-05,nan=0,inf=0
+  layers.0.ln_1.weight                                                    TRAIN ([64],64)                | min=+1.0e+00,max=+1.0e+00,mu=+1.0e+00,sig=5.7e-04,amu=1.0e+00,nan=0,inf=0 | min=-1.2e-03,max=+1.0e-03,mu=-6.4e-05,sig=4.4e-04,amu=3.6e-04,nan=0,inf=0
+  layers.0.ln_1.bias                                                      TRAIN ([64],64)                | min=-7.5e-04,max=+7.5e-04,mu=+2.8e-05,sig=6.4e-04,amu=6.1e-04,nan=0,inf=0 | min=-1.0e-03,max=+1.4e-03,mu=-3.9e-05,sig=5.4e-04,amu=4.2e-04,nan=0,inf=0
+  layers.0.ln_2.weight                                                    TRAIN ([64],64)                | min=+1.0e+00,max=+1.0e+00,mu=+1.0e+00,sig=5.8e-04,amu=1.0e+00,nan=0,inf=0 | min=-7.4e-04,max=+3.1e-04,mu=-5.5e-05,sig=1.6e-04,amu=1.0e-04,nan=0,inf=0
+  layers.0.ln_2.bias                                                      TRAIN ([64],64)                | min=-7.5e-04,max=+7.5e-04,mu=-1.3e-04,sig=6.3e-04,amu=6.1e-04,nan=0,inf=0 | min=-3.2e-04,max=+3.5e-04,mu=+2.6e-05,sig=1.4e-04,amu=1.1e-04,nan=0,inf=0
+  layers.0.ffn.w1.weight                                                  TRAIN ([176, 64],11264)        | min=-7.5e-02,max=+8.5e-02,mu=+3.7e-04,sig=2.0e-02,amu=1.6e-02,nan=0,inf=0 | min=-6.0e-04,max=+6.7e-04,mu=+3.4e-08,sig=8.5e-05,amu=5.9e-05,nan=0,inf=0
+  layers.0.ffn.w3.weight                                                  TRAIN ([176, 64],11264)        | min=-8.4e-02,max=+7.3e-02,mu=-4.1e-04,sig=2.0e-02,amu=1.6e-02,nan=0,inf=0 | min=-9.0e-04,max=+9.1e-04,mu=-3.4e-08,sig=9.1e-05,amu=6.1e-05,nan=0,inf=0
+  layers.0.ffn.w2.weight                                                  TRAIN ([64, 176],11264)        | min=-4.0e-02,max=+4.0e-02,mu=-1.0e-04,sig=1.0e-02,amu=7.9e-03,nan=0,inf=0 | min=-1.6e-03,max=+1.7e-03,mu=-3.5e-07,sig=1.8e-04,amu=1.2e-04,nan=0,inf=0
+  layers.0.gru.weight_ih_l0                                               TRAIN ([192, 64],12288)        | min=-1.5e-01,max=+1.5e-01,mu=+9.9e-04,sig=8.8e-02,amu=7.7e-02,nan=0,inf=0 | min=-5.4e-03,max=+4.3e-03,mu=-4.7e-07,sig=4.5e-04,amu=2.0e-04,nan=0,inf=0
+  layers.0.gru.weight_hh_l0                                               TRAIN ([192, 64],12288)        | min=-2.7e-01,max=+2.8e-01,mu=+6.7e-04,sig=7.2e-02,amu=5.8e-02,nan=0,inf=0 | min=-1.6e-03,max=+1.5e-03,mu=+1.5e-06,sig=1.4e-04,amu=6.1e-05,nan=0,inf=0
+  layers.0.gru.bias_ih_l0                                                 TRAIN ([192],192)              | min=-7.5e-04,max=+7.5e-04,mu=+2.5e-05,sig=6.3e-04,amu=5.9e-04,nan=0,inf=0 | min=-2.9e-02,max=+3.2e-02,mu=+1.4e-04,sig=7.2e-03,amu=3.1e-03,nan=0,inf=0
+  layers.0.gru.bias_hh_l0                                                 TRAIN ([192],192)              | min=-7.5e-04,max=+7.5e-04,mu=+2.7e-05,sig=6.3e-04,amu=5.9e-04,nan=0,inf=0 | min=-1.5e-02,max=+1.5e-02,mu=+7.6e-05,sig=3.6e-03,amu=1.6e-03,nan=0,inf=0
+  layers.0.adapter_attn.down_proj.weight                                  TRAIN ([16, 64],1024)          | min=-7.7e-02,max=+6.5e-02,mu=-8.2e-05,sig=2.0e-02,amu=1.5e-02,nan=0,inf=0 | min=-8.5e-06,max=+7.9e-06,mu=+1.2e-08,sig=3.2e-06,amu=2.8e-06,nan=0,inf=0
+  layers.0.adapter_attn.down_proj.bias                                    TRAIN ([16],16)                | min=-4.8e-04,max=+4.8e-04,mu=-1.9e-05,sig=4.7e-04,amu=4.5e-04,nan=0,inf=0 | min=-1.1e-04,max=+8.8e-05,mu=+5.5e-07,sig=6.5e-05,amu=5.5e-05,nan=0,inf=0
+  layers.0.adapter_attn.up_proj.weight                                    TRAIN ([64, 16],1024)          | min=-7.5e-04,max=+7.5e-04,mu=-1.8e-05,sig=5.8e-04,amu=5.3e-04,nan=0,inf=0 | min=-1.7e-04,max=+1.4e-04,mu=-2.1e-07,sig=4.8e-05,amu=3.7e-05,nan=0,inf=0
+  layers.0.adapter_attn.up_proj.bias                                      TRAIN ([64],64)                | min=-7.5e-04,max=+7.5e-04,mu=+6.6e-05,sig=5.8e-04,amu=5.4e-04,nan=0,inf=0 | min=-3.6e-02,max=+6.2e-02,mu=+4.9e-06,sig=1.9e-02,amu=1.5e-02,nan=0,inf=0
+  layers.0.adapter_ffn.down_proj.weight                                   TRAIN ([16, 64],1024)          | min=-7.1e-02,max=+5.6e-02,mu=-1.6e-04,sig=1.9e-02,amu=1.5e-02,nan=0,inf=0 | min=-2.1e-05,max=+2.5e-05,mu=-1.8e-07,sig=5.3e-06,amu=4.1e-06,nan=0,inf=0
+  layers.0.adapter_ffn.down_proj.bias                                     TRAIN ([16],16)                | min=-4.8e-04,max=+4.7e-04,mu=-4.1e-05,sig=4.5e-04,amu=4.3e-04,nan=0,inf=0 | min=-9.4e-05,max=+7.7e-05,mu=-2.2e-06,sig=5.9e-05,amu=4.8e-05,nan=0,inf=0
+  layers.0.adapter_ffn.up_proj.weight                                     TRAIN ([64, 16],1024)          | min=-7.5e-04,max=+7.5e-04,mu=-6.4e-06,sig=5.9e-04,amu=5.4e-04,nan=0,inf=0 | min=-3.2e-04,max=+4.5e-04,mu=-7.9e-08,sig=9.3e-05,amu=7.3e-05,nan=0,inf=0
+  layers.0.adapter_ffn.up_proj.bias                                       TRAIN ([64],64)                | min=-7.5e-04,max=+7.5e-04,mu=-1.6e-05,sig=6.6e-04,amu=6.3e-04,nan=0,inf=0 | min=-2.6e-02,max=+3.2e-02,mu=+5.5e-04,sig=1.3e-02,amu=1.0e-02,nan=0,inf=0
+  layers.1.qkv_block_internal.weight                                      TRAIN ([192, 64],12288)        | min=-7.1e-02,max=+7.3e-02,mu=+2.2e-04,sig=2.0e-02,amu=1.6e-02,nan=0,inf=0 | min=-5.8e-03,max=+4.1e-03,mu=+8.9e-09,sig=4.8e-04,amu=2.1e-04,nan=0,inf=0
+  layers.1.qkv_block_internal.bias                                        TRAIN ([192],192)              | min=-7.5e-04,max=+7.5e-04,mu=-3.0e-05,sig=5.0e-04,amu=4.1e-04,nan=0,inf=0 | min=-2.1e-03,max=+1.9e-03,mu=+2.6e-05,sig=5.6e-04,amu=2.7e-04,nan=0,inf=0
+  layers.1.proj_block_internal.weight                                     TRAIN ([64, 64],4096)          | min=-3.3e-02,max=+3.5e-02,mu=-2.8e-05,sig=1.0e-02,amu=8.0e-03,nan=0,inf=0 | min=-1.0e-02,max=+9.2e-03,mu=-4.9e-06,sig=1.9e-03,amu=1.3e-03,nan=0,inf=0
+  layers.1.proj_block_internal.bias                                       TRAIN ([64],64)                | min=-7.5e-04,max=+7.5e-04,mu=-2.3e-06,sig=6.4e-04,amu=6.0e-04,nan=0,inf=0 | min=-2.8e-02,max=+3.1e-02,mu=+4.8e-04,sig=1.3e-02,amu=1.0e-02,nan=0,inf=0
+  layers.1.attn_markov.transition_forward                                 TRAIN ([2, 2],4)               | min=-1.3e-02,max=+3.2e-02,mu=+8.1e-03,sig=1.9e-02,amu=1.5e-02,nan=0,inf=0 | min=+0.0e+00,max=+0.0e+00,mu=+0.0e+00,sig=0.0e+00,amu=0.0e+00,nan=0,inf=0
+  layers.1.attn_markov.transition_backward                                TRAIN ([2, 2],4)               | min=-3.6e-02,max=+3.8e-02,mu=+2.5e-03,sig=3.2e-02,amu=2.4e-02,nan=0,inf=0 | min=-1.5e-05,max=+3.2e-05,mu=+6.0e-06,sig=1.9e-05,amu=1.3e-05,nan=0,inf=0
+  layers.1.attn_markov.order_gate.0.weight                                TRAIN ([32, 16],512)           | min=-6.1e-02,max=+6.5e-02,mu=+8.4e-04,sig=1.9e-02,amu=1.5e-02,nan=0,inf=0 | min=-3.1e-06,max=+3.1e-06,mu=+1.1e-07,sig=3.1e-06,amu=3.1e-06,nan=0,inf=0
+  layers.1.attn_markov.order_gate.0.bias                                  TRAIN ([32],32)                | min=-1.5e-04,max=+1.4e-04,mu=-6.0e-05,sig=8.3e-05,amu=9.4e-05,nan=0,inf=0 | min=-3.6e-08,max=+2.9e-08,mu=-9.5e-09,sig=1.6e-08,amu=1.5e-08,nan=0,inf=0
+  layers.1.attn_markov.order_gate.2.weight                                TRAIN ([16, 32],512)           | min=-5.6e-02,max=+6.1e-02,mu=+5.2e-04,sig=1.9e-02,amu=1.5e-02,nan=0,inf=0 | min=-3.1e-06,max=+3.1e-06,mu=+1.2e-07,sig=3.1e-06,amu=3.1e-06,nan=0,inf=0
+  layers.1.attn_markov.order_gate.2.bias                                  TRAIN ([16],16)                | min=-2.0e-04,max=+2.0e-04,mu=-4.6e-05,sig=1.8e-04,amu=1.8e-04,nan=0,inf=0 | min=-9.6e-07,max=+5.5e-07,mu=-1.1e-07,sig=4.8e-07,amu=3.8e-07,nan=0,inf=0
+  layers.1.attn_markov.order_gate.4.weight                                TRAIN ([4, 16],64)             | min=-4.7e-02,max=+3.9e-02,mu=+4.0e-04,sig=2.0e-02,amu=1.5e-02,nan=0,inf=0 | min=-3.1e-06,max=+3.1e-06,mu=+4.9e-07,sig=3.1e-06,amu=3.1e-06,nan=0,inf=0
+  layers.1.attn_markov.order_gate.4.bias                                  TRAIN ([4],4)                  | min=-2.0e-04,max=+2.0e-04,mu=-2.2e-11,sig=1.7e-04,amu=1.0e-04,nan=0,inf=0 | min=-3.5e-05,max=+3.5e-05,mu=+2.7e-12,sig=2.9e-05,amu=1.8e-05,nan=0,inf=0
+  layers.1.attn_markov.relative_bias_layer.relative_attention_bias.weight TRAIN ([5, 2],10)              | min=-3.0e-02,max=+1.4e-02,mu=-1.1e-02,sig=1.4e-02,amu=1.5e-02,nan=0,inf=0 | min=-7.9e-05,max=+1.2e-04,mu=-1.2e-06,sig=5.6e-05,amu=3.7e-05,nan=0,inf=0
+  layers.1.ln_1.weight                                                    TRAIN ([64],64)                | min=+1.0e+00,max=+1.0e+00,mu=+1.0e+00,sig=5.9e-04,amu=1.0e+00,nan=0,inf=0 | min=-1.1e-03,max=+5.6e-04,mu=-7.3e-05,sig=3.3e-04,amu=2.6e-04,nan=0,inf=0
+  layers.1.ln_1.bias                                                      TRAIN ([64],64)                | min=-7.5e-04,max=+7.5e-04,mu=+8.0e-05,sig=6.0e-04,amu=5.6e-04,nan=0,inf=0 | min=-1.0e-03,max=+7.6e-04,mu=-3.8e-05,sig=3.6e-04,amu=2.6e-04,nan=0,inf=0
+  layers.1.ln_2.weight                                                    TRAIN ([64],64)                | min=+1.0e+00,max=+1.0e+00,mu=+1.0e+00,sig=5.3e-04,amu=1.0e+00,nan=0,inf=0 | min=-1.8e-04,max=+7.3e-05,mu=-1.8e-05,sig=3.8e-05,amu=2.9e-05,nan=0,inf=0
+  layers.1.ln_2.bias                                                      TRAIN ([64],64)                | min=-7.4e-04,max=+7.5e-04,mu=+9.2e-05,sig=5.7e-04,amu=5.2e-04,nan=0,inf=0 | min=-6.4e-05,max=+6.1e-05,mu=-2.3e-06,sig=2.9e-05,amu=2.3e-05,nan=0,inf=0
+  layers.1.ffn.w1.weight                                                  TRAIN ([176, 64],11264)        | min=-7.1e-02,max=+8.7e-02,mu=+4.4e-04,sig=2.0e-02,amu=1.6e-02,nan=0,inf=0 | min=-7.0e-04,max=+8.2e-04,mu=+6.6e-08,sig=7.5e-05,amu=5.1e-05,nan=0,inf=0
+  layers.1.ffn.w3.weight                                                  TRAIN ([176, 64],11264)        | min=-8.1e-02,max=+7.0e-02,mu=-4.8e-04,sig=2.0e-02,amu=1.6e-02,nan=0,inf=0 | min=-5.4e-04,max=+5.9e-04,mu=-5.9e-08,sig=6.4e-05,amu=4.5e-05,nan=0,inf=0
+  layers.1.ffn.w2.weight                                                  TRAIN ([64, 176],11264)        | min=-3.8e-02,max=+3.4e-02,mu=+1.9e-04,sig=9.9e-03,amu=7.9e-03,nan=0,inf=0 | min=-1.2e-03,max=+1.3e-03,mu=-8.0e-07,sig=1.4e-04,amu=9.6e-05,nan=0,inf=0
+  layers.1.gru.weight_ih_l0                                               TRAIN ([192, 64],12288)        | min=-1.5e-01,max=+1.5e-01,mu=-1.6e-03,sig=8.9e-02,amu=7.7e-02,nan=0,inf=0 | min=-5.1e-03,max=+4.2e-03,mu=-6.7e-07,sig=5.3e-04,amu=2.3e-04,nan=0,inf=0
+  layers.1.gru.weight_hh_l0                                               TRAIN ([192, 64],12288)        | min=-2.6e-01,max=+2.7e-01,mu=-3.9e-05,sig=7.2e-02,amu=5.7e-02,nan=0,inf=0 | min=-1.9e-03,max=+1.7e-03,mu=+4.5e-07,sig=1.7e-04,amu=7.3e-05,nan=0,inf=0
+  layers.1.gru.bias_ih_l0                                                 TRAIN ([192],192)              | min=-7.5e-04,max=+7.5e-04,mu=+1.6e-05,sig=6.3e-04,amu=5.9e-04,nan=0,inf=0 | min=-3.4e-02,max=+2.4e-02,mu=-6.1e-05,sig=5.7e-03,amu=2.7e-03,nan=0,inf=0
+  layers.1.gru.bias_hh_l0                                                 TRAIN ([192],192)              | min=-7.5e-04,max=+7.5e-04,mu=+2.2e-05,sig=6.3e-04,amu=5.9e-04,nan=0,inf=0 | min=-1.6e-02,max=+1.2e-02,mu=-3.4e-05,sig=2.8e-03,amu=1.4e-03,nan=0,inf=0
+  layers.1.adapter_attn.down_proj.weight                                  TRAIN ([16, 64],1024)          | min=-5.6e-02,max=+6.7e-02,mu=+1.2e-04,sig=2.0e-02,amu=1.6e-02,nan=0,inf=0 | min=-1.7e-05,max=+1.6e-05,mu=+7.8e-08,sig=5.1e-06,amu=4.1e-06,nan=0,inf=0
+  layers.1.adapter_attn.down_proj.bias                                    TRAIN ([16],16)                | min=-4.7e-04,max=+4.8e-04,mu=+3.2e-05,sig=4.6e-04,amu=4.3e-04,nan=0,inf=0 | min=-8.7e-05,max=+1.2e-04,mu=+7.9e-06,sig=6.2e-05,amu=5.2e-05,nan=0,inf=0
+  layers.1.adapter_attn.up_proj.weight                                    TRAIN ([64, 16],1024)          | min=-7.5e-04,max=+7.5e-04,mu=-1.5e-06,sig=5.8e-04,amu=5.4e-04,nan=0,inf=0 | min=-2.8e-04,max=+2.5e-04,mu=-4.6e-07,sig=7.3e-05,amu=5.7e-05,nan=0,inf=0
+  layers.1.adapter_attn.up_proj.bias                                      TRAIN ([64],64)                | min=-7.5e-04,max=+7.5e-04,mu=-1.2e-05,sig=6.3e-04,amu=5.8e-04,nan=0,inf=0 | min=-3.0e-02,max=+2.8e-02,mu=-1.3e-04,sig=1.3e-02,amu=9.8e-03,nan=0,inf=0
+  layers.1.adapter_ffn.down_proj.weight                                   TRAIN ([16, 64],1024)          | min=-6.8e-02,max=+6.9e-02,mu=-3.0e-04,sig=2.0e-02,amu=1.5e-02,nan=0,inf=0 | min=-2.1e-05,max=+2.3e-05,mu=-9.4e-08,sig=6.4e-06,amu=5.1e-06,nan=0,inf=0
+  layers.1.adapter_ffn.down_proj.bias                                     TRAIN ([16],16)                | min=-4.6e-04,max=+4.8e-04,mu=-2.4e-05,sig=4.6e-04,amu=4.3e-04,nan=0,inf=0 | min=-9.8e-05,max=+9.2e-05,mu=+1.7e-05,sig=6.0e-05,amu=5.0e-05,nan=0,inf=0
+  layers.1.adapter_ffn.up_proj.weight                                     TRAIN ([64, 16],1024)          | min=-7.5e-04,max=+7.5e-04,mu=-1.7e-05,sig=5.9e-04,amu=5.5e-04,nan=0,inf=0 | min=-5.0e-04,max=+5.3e-04,mu=-1.4e-06,sig=1.1e-04,amu=8.2e-05,nan=0,inf=0
+  layers.1.adapter_ffn.up_proj.bias                                       TRAIN ([64],64)                | min=-7.5e-04,max=+7.5e-04,mu=+1.1e-05,sig=6.6e-04,amu=6.3e-04,nan=0,inf=0 | min=-3.5e-02,max=+2.7e-02,mu=+2.7e-04,sig=1.1e-02,amu=8.8e-03,nan=0,inf=0
+  final_norm.weight                                                       TRAIN ([64],64)                | min=+1.0e+00,max=+1.0e+00,mu=+1.0e+00,sig=6.0e-04,amu=1.0e+00,nan=0,inf=0 | min=-5.4e-03,max=+2.5e-03,mu=-6.4e-04,sig=1.3e-03,amu=1.1e-03,nan=0,inf=0
+  final_norm.bias                                                         TRAIN ([64],64)                | min=-7.5e-04,max=+7.5e-04,mu=-3.4e-05,sig=7.3e-04,amu=7.1e-04,nan=0,inf=0 | min=-3.4e-03,max=+2.7e-03,mu=+2.8e-04,sig=1.2e-03,amu=9.7e-04,nan=0,inf=0
+  head.weight                                                             TRAIN ([100, 64],6400)         | min=-7.8e-02,max=+6.9e-02,mu=-2.5e-04,sig=2.0e-02,amu=1.6e-02,nan=0,inf=0 | min=-7.6e-02,max=+5.7e-02,mu=-6.0e-08,sig=6.4e-03,amu=3.5e-03,nan=0,inf=0
+
+  Total params: 0.246M, Trainable: 0.246M
+  Device: cuda:0
+--- End Stats ---
+
+
+--- Running Isolated Feature Test Configurations (Refactored Hybrid) ---
+
+--- Testing Isolated Configuration: baseline_isolated (Refactored Hybrid) ---
+INFO: LearnableMarkovianAttention initialized for 4 heads (parent_total_heads: 4, head_dim: 16). External QKV: False
+INFO: LearnableMarkovianAttention initialized for 4 heads (parent_total_heads: 4, head_dim: 16). External QKV: False
+Logits (regular, baseline_isolated) shape: torch.Size([2, 16, 100])
+Logits (empty_seq, baseline_isolated) shape: torch.Size([2, 0, 100])
+Forward pass for 'baseline_isolated': PASSED
+Training step for 'baseline_isolated': PASSED (Loss: 4.645)
+
+--- Testing Isolated Configuration: qi_rff_attention_isolated (Refactored Hybrid) ---
+INFO: QuantumInspiredAttentionRFF initialized for 4 heads (parent_total_heads: 4, head_dim: 16), 16 RFFs per head. Redraw: False. External QKV: False
+INFO: QuantumInspiredAttentionRFF initialized for 4 heads (parent_total_heads: 4, head_dim: 16), 16 RFFs per head. Redraw: False. External QKV: False
+Logits (regular, qi_rff_attention_isolated) shape: torch.Size([2, 16, 100])
+Logits (empty_seq, qi_rff_attention_isolated) shape: torch.Size([2, 0, 100])
+Forward pass for 'qi_rff_attention_isolated': PASSED
+Training step for 'qi_rff_attention_isolated': PASSED (Loss: 4.630)
+
+--- Testing Isolated Configuration: multimodal_sequential_isolated (Refactored Hybrid) ---
+INFO: LearnableMarkovianAttention initialized for 4 heads (parent_total_heads: 4, head_dim: 16). External QKV: False
+INFO: LearnableMarkovianAttention initialized for 4 heads (parent_total_heads: 4, head_dim: 16). External QKV: False
+Logits (regular, multimodal_sequential_isolated) shape: torch.Size([2, 16, 100])
+Logits (empty_seq, multimodal_sequential_isolated) shape: torch.Size([2, 0, 100])
+Forward pass for 'multimodal_sequential_isolated': PASSED
+Training step for 'multimodal_sequential_isolated': PASSED (Loss: 4.670)
+
+--- Testing Isolated Configuration: multimodal_interleaved_isolated (Refactored Hybrid) ---
+INFO: LearnableMarkovianAttention initialized for 4 heads (parent_total_heads: 4, head_dim: 16). External QKV: False
+INFO: LearnableMarkovianAttention initialized for 4 heads (parent_total_heads: 4, head_dim: 16). External QKV: False
+Logits (regular, multimodal_interleaved_isolated) shape: torch.Size([2, 16, 100])
+Logits (empty_seq, multimodal_interleaved_isolated) shape: torch.Size([2, 0, 100])
+Forward pass for 'multimodal_interleaved_isolated': PASSED
+Training step for 'multimodal_interleaved_isolated': PASSED (Loss: 4.649)
+
+--- Testing Isolated Configuration: hybrid_split_heads_isolated (Refactored Hybrid) ---
+INFO: LearnableMarkovianAttention initialized for 2 heads (parent_total_heads: 4, head_dim: 16). External QKV: True
+INFO: QuantumInspiredAttentionRFF initialized for 2 heads (parent_total_heads: 4, head_dim: 16), 16 RFFs per head. Redraw: False. External QKV: True
+INFO: LearnableMarkovianAttention initialized for 2 heads (parent_total_heads: 4, head_dim: 16). External QKV: True
+INFO: QuantumInspiredAttentionRFF initialized for 2 heads (parent_total_heads: 4, head_dim: 16), 16 RFFs per head. Redraw: False. External QKV: True
+Logits (regular, hybrid_split_heads_isolated) shape: torch.Size([2, 16, 100])
+Logits (empty_seq, hybrid_split_heads_isolated) shape: torch.Size([2, 0, 100])
+Forward pass for 'hybrid_split_heads_isolated': PASSED
+Training step for 'hybrid_split_heads_isolated': PASSED (Loss: 4.653)
+
+--- Testing Isolated Configuration: hybrid_parallel_sum_isolated (Refactored Hybrid) ---
+INFO: LearnableMarkovianAttention initialized for 4 heads (parent_total_heads: 4, head_dim: 16). External QKV: False
+INFO: QuantumInspiredAttentionRFF initialized for 4 heads (parent_total_heads: 4, head_dim: 16), 16 RFFs per head. Redraw: False. External QKV: False
+INFO: LearnableMarkovianAttention initialized for 4 heads (parent_total_heads: 4, head_dim: 16). External QKV: False
+INFO: QuantumInspiredAttentionRFF initialized for 4 heads (parent_total_heads: 4, head_dim: 16), 16 RFFs per head. Redraw: False. External QKV: False
+Logits (regular, hybrid_parallel_sum_isolated) shape: torch.Size([2, 16, 100])
+Logits (empty_seq, hybrid_parallel_sum_isolated) shape: torch.Size([2, 0, 100])
+Forward pass for 'hybrid_parallel_sum_isolated': PASSED
+Training step for 'hybrid_parallel_sum_isolated': PASSED (Loss: 4.637)
+
+--- Testing Isolated Configuration: per_layer_attention_isolated (Refactored Hybrid) ---
+INFO: LearnableMarkovianAttention initialized for 4 heads (parent_total_heads: 4, head_dim: 16). External QKV: False
+INFO: QuantumInspiredAttentionRFF initialized for 4 heads (parent_total_heads: 4, head_dim: 16), 16 RFFs per head. Redraw: False. External QKV: False
+Logits (regular, per_layer_attention_isolated) shape: torch.Size([2, 16, 100])
+Logits (empty_seq, per_layer_attention_isolated) shape: torch.Size([2, 0, 100])
+Forward pass for 'per_layer_attention_isolated': PASSED
+Training step for 'per_layer_attention_isolated': PASSED (Loss: 4.654)
+
+--- Testing Isolated Configuration: with_adapters_isolated (Refactored Hybrid) ---
+INFO: LearnableMarkovianAttention initialized for 4 heads (parent_total_heads: 4, head_dim: 16). External QKV: False
+INFO: LearnableMarkovianAttention initialized for 4 heads (parent_total_heads: 4, head_dim: 16). External QKV: False
+Logits (regular, with_adapters_isolated) shape: torch.Size([2, 16, 100])
+Logits (empty_seq, with_adapters_isolated) shape: torch.Size([2, 0, 100])
+Forward pass for 'with_adapters_isolated': PASSED
+Training step for 'with_adapters_isolated': PASSED (Loss: 4.594)
+
+--- Testing Isolated Configuration: with_sparsity_isolated (Refactored Hybrid) ---
+INFO: LearnableMarkovianAttention initialized for 4 heads (parent_total_heads: 4, head_dim: 16). External QKV: False
+INFO: LearnableMarkovianAttention initialized for 4 heads (parent_total_heads: 4, head_dim: 16). External QKV: False
+Logits (regular, with_sparsity_isolated) shape: torch.Size([2, 16, 100])
+Logits (empty_seq, with_sparsity_isolated) shape: torch.Size([2, 0, 100])
+Forward pass for 'with_sparsity_isolated': PASSED
+Training step for 'with_sparsity_isolated': PASSED (Loss: 4.790)
+
+--- Running Specific Unit Tests (Refactored Hybrid, using simplified base_test_cfg) ---
+
+--- Test: Activation Checkpointing ---
+INFO: CKPT test forcing dropout to 0.1.
+INFO: LearnableMarkovianAttention initialized for 2 heads (parent_total_heads: 2, head_dim: 16). External QKV: False
+INFO: LearnableMarkovianAttention initialized for 2 heads (parent_total_heads: 2, head_dim: 16). External QKV: False
+CKPT Eval Fwd: PASSED (shape torch.Size([2, 8, 50]))
+CKPT Train Fwd (logits): PASSED (shape torch.Size([2, 8, 50]))
+CKPT Bwd (gradients): PASSED.
+
+--- Test: Weight Tying ---
+INFO: LearnableMarkovianAttention initialized for 2 heads (parent_total_heads: 2, head_dim: 16). External QKV: False
+INFO: Output head weights TIED.
+Tying: PASSED - Head and token_embedding weights share memory, as expected.
+Tying: Gradient flow to token_embeddings.weight confirmed (grad sum: 4.13e+03).
+
+--- Test: GRU Influence ---
+INFO: LearnableMarkovianAttention initialized for 2 heads (parent_total_heads: 2, head_dim: 16). External QKV: False
+INFO: LearnableMarkovianAttention initialized for 2 heads (parent_total_heads: 2, head_dim: 16). External QKV: False
+GRU Influence: PASSED - Outputs differ when GRU layer is toggled (max absolute difference: 0.5084).
+
+--- Test: Markovian Bias Fallback Logic (Missing Backward Transition) ---
+INFO: LearnableMarkovianAttention initialized for 2 heads (parent_total_heads: 2, head_dim: 16). External QKV: False
+Fallback Test: PASSED - Expected UserWarning regarding missing 'transition_backward' was captured.
+INFO: Restored 'transition_backward' parameter in test_markovian_bias_fallback.
+----------------------------------------------------------------------------------------------------
+Example run finished (Refactored Hybrid).
+<ipython-input-1-082ea5b148f4>:668: UserWarning: Layer LearnableMarkovianAttention(
+  (order_gate): Sequential(
+    (0): Linear(in_features=16, out_features=32, bias=True)
+    (1): GELU(approximate='none')
+    (2): Linear(in_features=32, out_features=2, bias=True)
+  )
+  (qkv): Linear(in_features=32, out_features=96, bias=True)
+  (proj): Linear(in_features=32, out_features=32, bias=True)
+  (resid_dropout): Dropout(p=0.0, inplace=False)
+  (relative_bias_layer): LearnedRelativePositionalEmbeddings(
+    (relative_attention_bias): Embedding(3, 2)
+  )
+): Dir mismatch! OrderW 2 dirs, Trans 1 dirs. Adjusting.
+  dyn_markov_bias_val = self.create_markovian_bias(N, order_weights, q.device)
